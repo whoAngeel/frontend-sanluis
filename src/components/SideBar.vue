@@ -28,13 +28,22 @@
                         </RouterLink>
                     </li>
                     <li>
-                        <RouterLink to="/productos"
-                            class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                            <span class="inline-flex items-center justify-center h-12 w-12 ">
-                                <font-awesome-icon :icon="['fas', 'bag-shopping']" />
-                            </span>
-                            <span class=" font-medium">Productos</span>
-                        </RouterLink>
+                        <div class="collapse">
+                            <input type="checkbox" />
+                            <div class="collapse-title text-xl font-medium">
+                                Productos
+                            </div>
+                            <div class="collapse-content">
+                                <RouterLink to="/productos"
+                                    class="flex flex-row items-center transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                    <span class="inline-flex items-center justify-center h-12 w-12">
+                                        <font-awesome-icon :icon="['fas', 'bag-shopping']" />
+                                    </span>
+                                    <span class=" font-medium">Productos</span>
+                                </RouterLink>
+                            </div>
+                        </div>
+
                     </li>
                     <!-- <li>
                         <a href="#"
@@ -82,21 +91,27 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/userStore'
+import { useEmployeeStore } from '../stores/employee'
 
-const store = useUserStore()
+const userStore = useUserStore()
+const employeeStore = useEmployeeStore()
+
 const router = useRouter()
 
 const logout = () => {
-    console.log('logout');
-    store.$reset();
+    // console.log('logout');
+    userStore.$reset();
+    employeeStore.$reset()
     router.push('/login')
 }
 
 </script>
 
 <style scoped>
-li>.router-link-active {
-    color: hsl(var(--p));
+.router-link-active {
+    background-color: hsl(var(--b3));
+
+
 }
 
 .logo {

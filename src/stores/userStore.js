@@ -19,19 +19,10 @@ export const useUserStore = defineStore('userStore', () => {
         state.id = id
     }
 
-    // const getEmployee = (id) => {
-    //     axios.request({
-    //         headers: {
-    //             Authorization: `Bearer ${state.token}`
-    //         },
-    //         method: "GET",
-    //         url: `/api/users/${id}`
-    //     }).then((result) => {
-    //         console.log(result.data);
-    //     }).catch((err) => {
-    //         console.log(err);
-    //     });
-    // }
+    const getState = computed(() => {
+        return state
+    })
+
 
     function $reset() {
         state.role = "";
@@ -40,7 +31,7 @@ export const useUserStore = defineStore('userStore', () => {
     }
 
 
-    return { state, setToken, setRole, setId, $reset }
+    return { state, setToken, setRole, setId, $reset, getState }
 })
 
 if (import.meta.hot) {

@@ -21,7 +21,6 @@ export const useEmployeeStore = defineStore('employee', () => {
             method: "GET",
             url: `/api/auth/profile-user`
         }).then((result) => {
-            console.log(result.data);
             const employee = result.data.employee
             if (!employee) return;
             state.curp = employee.curp
@@ -40,7 +39,17 @@ export const useEmployeeStore = defineStore('employee', () => {
         return state
     })
 
-    return { state, setEmployee, getEmployee }
+    function $reset() {
+        state.fullname = ""
+        state.curp = ""
+        state.rfc = ""
+        state.phone = ""
+        state.id = null
+        state.email = ""
+        state.salary = 0
+    }
+
+    return { state, setEmployee, getEmployee, $reset }
 })
 
 if (import.meta.hot) {
