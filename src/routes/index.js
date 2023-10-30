@@ -23,6 +23,10 @@ const routes = [
                 path: 'punto-venta',
                 name: "PuntoDeVenta",
                 component: () => import('../views/modulos/PuntoVenta.vue')
+            }, {
+                path: 'perfil',
+                name: "PerfilUsuario",
+                component: () => import('../views/modulos/Profile.vue')
             }
         ]
     }, {

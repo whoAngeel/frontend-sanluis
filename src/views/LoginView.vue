@@ -56,17 +56,22 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useFetch } from '@vueuse/core'
 import { useToast } from 'vue-toastification';
+import { useUserStore } from '../stores/userStore'
+import { useEmployeeStore } from '../stores/employee'
 import axios from 'axios'
 
 const router = useRouter()
 const toast = useToast()
+const userStore = useUserStore()
+const employeeStore = useEmployeeStore()
 
 const username = ref("")
 const password = ref("")
 const showPassword = ref(false)
 const isLoading = ref(false)
+
+// const { setToken, setUser } = store
 
 const login = () => {
     isLoading.value = true
@@ -74,11 +79,22 @@ const login = () => {
         username: username.value,
         password: password.value
     }).then((res) => {
-        console.log(res);
+        // console.log(res.data);
         isLoading.value = false
+        // console.log(res.data.token);
+        // console.log(res.data.user);
+        const { user, token } = res.data
+        userStore.setId(user.id)
+        userStore.setRole(user.role)
+        userStore.setToken(token)
+        employeeStore.setEmployee(userStore.state.token)
+        // setUser(user)
+        router.push('/')
     }).catch((error) => {
-        console.log(error.response.data.message);
-        toast.error(error.response.data.message);
+        console.log(error);
+        // console.log(error.response.data.message);
+        if (error.message) toast.error(error.message)
+        else if (error.message.data) toast.error(error.response.data.message);
         isLoading.value = false
     })
 

@@ -55,23 +55,23 @@
                         </a>
                     </li> -->
                     <li>
-                        <a href="#"
+                        <RouterLink to="/perfil"
                             class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
                             <span class="inline-flex items-center justify-center h-12 w-12 ">
                                 <font-awesome-icon icon="fa-solid fa-user" />
                             </span>
                             <span class=" font-medium">Perfil</span>
-                        </a>
+                        </RouterLink>
                     </li>
 
                     <li>
-                        <router-link to="/login"
+                        <button @click="logout"
                             class="flex flex-row items-center h-12 transform hover:translate-x-2  transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
                             <span class="inline-flex items-center justify-center h-12 w-12 ">
                                 <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
                             </span>
                             <span class=" font-medium">Cerrar Sesion</span>
-                        </router-link>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -80,6 +80,17 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
+import { useUserStore } from '../stores/userStore'
+
+const store = useUserStore()
+const router = useRouter()
+
+const logout = () => {
+    console.log('logout');
+    store.$reset();
+    router.push('/login')
+}
 
 </script>
 

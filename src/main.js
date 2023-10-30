@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import './style.css'
 import App from './App.vue'
 import Toast, { POSITION } from "vue-toastification";
@@ -13,9 +14,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
 
+const pinia = createPinia()
+
 const toastOptions = {
     position: POSITION.TOP_CENTER,
     timeout: 3000
 }
 
-createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(router).use(Toast, toastOptions).mount('#app')
+createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(pinia).use(router).use(Toast, toastOptions).mount('#app')
