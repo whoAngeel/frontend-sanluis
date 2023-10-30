@@ -3,11 +3,11 @@ import { createPinia } from 'pinia'
 import './style.css'
 import App from './App.vue'
 import Toast, { POSITION } from "vue-toastification";
+import VuePaginate from 'vue-paginate';
 import "vue-toastification/dist/index.css";
 import { router } from "./routes/index";
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
-
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -22,4 +22,4 @@ const toastOptions = {
     timeout: 3000
 }
 
-createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(VueCookies, { expires: '7d' }).use(pinia).use(router).use(Toast, toastOptions).mount('#app')
+createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(VuePaginate).use(VueCookies, { expires: '7d' }).use(pinia).use(router).use(Toast, toastOptions).mount('#app')

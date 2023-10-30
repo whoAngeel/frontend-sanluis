@@ -1,5 +1,5 @@
 <template>
-    <div class="navbar bg-base-100 ">
+    <div class="navbar bg-base-300 ">
         <a class="font-semibold normal-case text-xl ml-6">{{ titleModule }}</a>
     </div>
 </template>

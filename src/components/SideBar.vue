@@ -89,9 +89,11 @@
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/userStore'
 import { useEmployeeStore } from '../stores/employee'
+import { useCategoriesStore } from '../stores/categories'
 
 const userStore = useUserStore()
 const employeeStore = useEmployeeStore()
+const catStore = useCategoriesStore()
 
 const router = useRouter()
 
@@ -99,6 +101,7 @@ const logout = () => {
     // console.log('logout');
     userStore.$reset();
     employeeStore.$reset()
+    catStore.$reset()
     router.push('/login')
 }
 

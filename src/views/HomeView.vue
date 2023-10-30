@@ -3,7 +3,7 @@
     <div class="w-screen">
         <SideBar class="" />
 
-        <div class="h-screen bg-base-300 w-5/6 fixed right-0">
+        <div class="h-screen bg-base-100 w-5/6 fixed right-0">
             <router-view></router-view>
         </div>
     </div>

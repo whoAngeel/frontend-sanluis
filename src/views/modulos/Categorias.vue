@@ -1,36 +1,88 @@
 <template>
     <NavBar titleModule="Categorias" />
     <div class="w-4/6 mx-auto items-center">
-        <div class="flex justify-center h-full w-full my-12">
-            <label for="crearCategoria" class="btn btn-primary">open modal</label>
-            <CreateCategory />
-        </div>
-
-        <div class="flex justify-center h-full w-full overflow-x-auto">
-            <div class="">
-                <TableCategories :categories="getCategories" />
+        <div class="flex flex-col items-center justify-center h-full w-full my-12">
+            <label @click="toggleModal()" class="btn btn-primary">Nueva categoría</label>
+            <div class="join mt-10">
+                <button class="join-item btn" @click="prevPage" :disabled="currentPage <= 0">«</button>
+                <button class="join-item btn">{{ currentPage + 1 }}</button>
+                <button class="join-item btn" @click="nextPage" :disabled="categories.length < 5">»</button>
             </div>
+
+            <Modal :show="showCreateModal" @close="toggleModal()">
+                <template v-slot:title>
+                    <h3 class="text-xl font-bold text-center ">Nueva categoría</h3>
+                </template>
+
+                <template #closeModal>
+                    <div class="relative">
+
+                        <button class="btn btn-sm text-xl hover:text-2xl btn-circle btn-ghost absolute right-1 top-0"
+                            @click="toggleModal()">
+                            <font-awesome-icon :icon="['fas', 'xmark']" />
+                        </button>
+                    </div>
+                </template>
+
+                <template #body>
+                    <CreateCategory @closeModal="toggleModal()" />
+                </template>
+
+            </Modal>
         </div>
 
+        <div class="flex flex-col justify-center h-full w-full overflow-x-auto  my-12">
+            <div class="">
+                <TableCategories :categories="categories" />
 
+            </div>
+
+        </div>
     </div>
 </template>
 
 <script setup>
 import NavBar from '@/components/navbars/NavBar.vue';
 import TableCategories from '../../components/tables/Categories.vue'
+import CreateCategory from '../../components/forms/CreateCategory.vue';
+import Modal from '@/components/Modal.vue'
 import { useUserStore } from '../../stores/userStore'
 import { useCategoriesStore } from '../../stores/categories'
-import { onMounted } from 'vue';
-import CreateCategory from '../../components/forms/CreateCategory.vue';
+import { useToggle } from '@vueuse/core'
+import { onMounted, ref, computed } from 'vue';
+
 
 const userStore = useUserStore()
 const catStore = useCategoriesStore()
 
-const { getCategories, categories } = catStore
+const currentPage = ref(0)
 
-onMounted(() => {
-    catStore.fetchCategories(userStore.state.token)
+const nextPage = () => {
+    if (currentPage.value * 10 < categories.value.length) {
+        currentPage.value += 1;
+        catStore.fetchCategories(userStore.state.token, currentPage.value * 5);
+    }
+}
+
+const prevPage = () => {
+    if (currentPage.value >= 1) {
+        currentPage.value -= 1;
+        catStore.fetchCategories(userStore.state.token, currentPage.value * 5);
+    }
+}
+// const showCreateModal = ref(false)
+const [showCreateModal, toggleModal] = useToggle()
+
+const getCategories = computed(() => {
+    return catStore.getCategories
+})
+
+const categories = computed(() => {
+    return catStore.categories
+})
+
+onMounted(async () => {
+    await catStore.fetchCategories(userStore.state.token, currentPage.value)
 })
 
 </script>
