@@ -13,23 +13,23 @@ export default {
         themes: ["light", "dark", "corporate", {
             "sanluis": {
 
-                "primary": "#321fad",
+                "primary": "#F9B572",
 
-                "secondary": "#ffccf1",
+                "secondary": "#A7D397",
 
-                "accent": "#d6722a",
+                "accent": "#64CCC5",
 
-                "neutral": "#231825",
+                "neutral": "#16171d",
 
-                "base-100": "#f3f3f7",
+                "base-100": "#FAF8ED",
 
-                "info": "#8ec3e1",
+                "info": "#80B3FF",
 
-                "success": "#25e488",
+                "success": "#5cbc5f",
 
-                "warning": "#e8b021",
+                "warning": "#ffcc00",
 
-                "error": "#e56f5d",
+                "error": "#fb4b71",
             },
         },],
     }
