@@ -12,6 +12,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import VueCookies from 'vue-cookies'
 library.add(fas)
 
 const pinia = createPinia()
@@ -21,4 +22,4 @@ const toastOptions = {
     timeout: 3000
 }
 
-createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(pinia).use(router).use(Toast, toastOptions).mount('#app')
+createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(VueCookies, { expires: '7d' }).use(pinia).use(router).use(Toast, toastOptions).mount('#app')

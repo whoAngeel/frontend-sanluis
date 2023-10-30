@@ -45,6 +45,22 @@ const routes = [
                 }
             },
             {
+                path: 'categorias',
+                name: "Categorias",
+                component: () => import('../views/modulos/Categorias.vue'),
+                meta: {
+                    roles: ['admin']
+                }
+            },
+            {
+                path: 'proveedores',
+                name: "Proveedores",
+                component: () => import('../views/modulos/Proveedores.vue'),
+                meta: {
+                    roles: ['admin']
+                }
+            },
+            {
                 path: 'unauthorized',
                 name: "Unauthorized",
                 component: () => import('../views/Unauthorized.vue'),

@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification';
 import { useUserStore } from '../stores/userStore'
@@ -88,6 +88,8 @@ const login = () => {
         userStore.setRole(user.role)
         userStore.setToken(token)
         employeeStore.setEmployee(userStore.state.token)
+        $cookies.set('auth', userStore.state.token)
+        $cookies.set('role', userStore.state.role)
         // setUser(user)
         router.push('/')
     }).catch((error) => {
@@ -99,4 +101,9 @@ const login = () => {
     })
 
 }
+
+onBeforeMount(() => {
+    $cookies.remove('auth')
+    $cookies.remove('role')
+})
 </script>

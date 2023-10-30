@@ -29,7 +29,7 @@
                     </li>
                     <li>
                         <div class="collapse">
-                            <input type="checkbox" />
+                            <input type="checkbox">
                             <div class="collapse-title text-xl font-medium">
                                 Productos
                             </div>
@@ -41,28 +41,25 @@
                                     </span>
                                     <span class=" font-medium">Productos</span>
                                 </RouterLink>
+                                <RouterLink to="/proveedores"
+                                    class="flex flex-row items-center transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                    <span class="inline-flex items-center justify-center h-12 w-12">
+                                        <font-awesome-icon icon="fa-solid fa-truck-ramp-box" />
+                                    </span>
+                                    <span class=" font-medium">Proveedores</span>
+                                </RouterLink>
+                                <RouterLink to="/categorias"
+                                    class="flex flex-row items-center transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                    <span class="inline-flex items-center justify-center h-12 w-12">
+                                        <font-awesome-icon icon="fa-solid fa-box-archive" />
+                                    </span>
+                                    <span class=" font-medium">Categorias</span>
+                                </RouterLink>
                             </div>
                         </div>
 
                     </li>
-                    <!-- <li>
-                        <a href="#"
-                            class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                            <span class="inline-flex items-center justify-center h-12 w-12 ">
-                                <font-awesome-icon icon="fa-solid fa-truck" />
-                            </span>
-                            <span class=" font-medium">Proveedores</span>
-                        </a>
-                    </li> -->
-                    <!-- <li>
-                        <a href="#"
-                            class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                            <span class="inline-flex items-center justify-center h-12 w-12 ">
-                                <font-awesome-icon icon="fa-solid fa-calendar" />
-                            </span>
-                            <span class=" font-medium">Categorias</span>
-                        </a>
-                    </li> -->
+
                     <li>
                         <RouterLink to="/perfil"
                             class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">

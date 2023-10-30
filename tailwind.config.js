@@ -3,12 +3,14 @@ export default {
     content: [
         "./index.html",
         "./src/**/*.{vue,js,ts,jsx,tsx}",
+        'node_modules/flowbite-vue/**/*.{js,jsx,ts,tsx}',
+        'node_modules/flowbite/**/*.{js,jsx,ts,tsx}'
     ],
     theme: {
         extend: {},
         fontFamily: { 'sans': 'Montserrat, Arial, sans-serif' }
     },
-    plugins: [require("daisyui"), require('@tailwindcss/typography')],
+    plugins: [require("daisyui"), require('@tailwindcss/typography'), require('flowbite/plugin')],
     daisyui: {
         themes: ["light", "dark", "corporate", {
             "sanluis": {
