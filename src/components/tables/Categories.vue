@@ -1,17 +1,31 @@
 <template>
-    <table class="table">
-        <!-- head -->
-        <thead>
-            <tr class="text-base-content text-base">
-                <th>Nombre</th>
-                <th>Descripcion</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- row 1 -->
-            <paginate name="categories" :list="categories" :per="5">
-                <tr class="hover" v-for="categoria in paginated('categories')" :key="categoria.id">
+    <div class="flex flex-col text-center w-full mt-5">
+        <div>
+
+            <div class="join mt-10">
+                <button class="join-item btn" @click="setPage(false, $cookies.get('auth'))" v-if="!isFirstPage">«</button>
+                <button class="join-item btn">{{ page }}</button>
+                <button class="join-item btn" @click="setPage(true, $cookies.get('auth'))" v-if="!isLastPage">»</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="flex items-start justify-center content-center overflow-x-auto h-80">
+
+        <div v-if="!loaded" class="h-full flex justify-center content-center items-center overflow-hidden">
+            <CubeLoader />
+        </div>
+        <table v-else class="w-2/4 mt-5">
+            <thead>
+                <tr class="text-base-content text-base">
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="hover" v-for="categoria in results" :key="categoria.id">
                     <td>{{ categoria.name }}</td>
                     <td>{{ categoria.description }}</td>
                     <td class="flex w-full content-evenly justify-evenly items-center">
@@ -29,12 +43,14 @@
                         </div>
                     </td>
                 </tr>
-            </paginate>
-            <paginate-links for="categories"></paginate-links>
+            </tbody>
+        </table>
+    </div>
 
 
-        </tbody>
-    </table>
+
+
+
     <Modal :show="showDeleteModal" @close="toggleModal()">
         <template v-slot:title>
             <h3 class="text-lg font-bold text-center mt-5">¿Estas seguro de eliminar esta categoria?</h3>
@@ -60,9 +76,11 @@
 
 <script setup>
 import Modal from '../Modal.vue';
+import CubeLoader from '../loaders/CubeLoader.vue'
 import { useToggle } from '@vueuse/core'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useCategoriesStore } from '../../stores/categories'
+import usePagination from '../../composables/usePagination'
 
 const catStore = useCategoriesStore()
 
@@ -70,6 +88,7 @@ const [showDeleteModal, toggleModal] = useToggle()
 const idCat = ref(0)
 
 const { categories } = defineProps(['categories'])
+const { results, setPage, paginate, page, isFirstPage, isLastPage, loaded } = usePagination()
 
 const editarCategoria = (id) => {
     console.log(id);
@@ -87,4 +106,19 @@ const eliminarCat = (id) => {
     catStore.fetchCategories(token)
 }
 
+onMounted(() => {
+    const token = $cookies.get('auth')
+    paginate(token)
+})
+
 </script>
+
+<style scoped>
+.loading {
+    opacity: 0.3;
+}
+
+.loaded {
+    opacity: 1;
+}
+</style>

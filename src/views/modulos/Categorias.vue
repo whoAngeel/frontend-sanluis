@@ -3,11 +3,7 @@
     <div class="w-4/6 mx-auto items-center">
         <div class="flex flex-col items-center justify-center h-full w-full my-12">
             <label @click="toggleModal()" class="btn btn-primary">Nueva categoría</label>
-            <div class="join mt-10">
-                <button class="join-item btn" @click="prevPage" :disabled="currentPage <= 0">«</button>
-                <button class="join-item btn">{{ currentPage + 1 }}</button>
-                <button class="join-item btn" @click="nextPage" :disabled="categories.length < 5">»</button>
-            </div>
+
 
             <Modal :show="showCreateModal" @close="toggleModal()">
                 <template v-slot:title>
@@ -32,10 +28,8 @@
         </div>
 
         <div class="flex flex-col justify-center h-full w-full overflow-x-auto  my-12">
-            <div class="">
-                <TableCategories :categories="categories" />
+            <TableCategories :categories="categories" />
 
-            </div>
 
         </div>
     </div>

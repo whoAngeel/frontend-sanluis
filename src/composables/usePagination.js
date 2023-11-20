@@ -6,9 +6,9 @@ export default function () {
     const pagination = reactive({
         loaded: false,
         containerRef: null,
-        page: 0,
+        page: 1,
         totalPages: 0,
-        limit: 5,
+        limit: 10,
         results: []
     })
 
@@ -21,16 +21,13 @@ export default function () {
                 },
                 params: {
                     limit: pagination.limit,     // Número de página actual
-                    offset: pagination.page // Elementos por página
+                    offset: (pagination.page - 1) * pagination.limit // Elementos por página
                 }
             })
             pagination.results = data.categorias
             pagination.totalPages = Math.ceil(data.total / pagination.limit)
-            const top = pagination.containerRef.offsetTop
-            window.scrollTo({
-                top,
-                behavior: 'smooth'
-            })
+            console.log(pagination.totalPages);
+
         } catch (error) {
             console.log("ERROR usePagination");
             console.log(error);
@@ -44,17 +41,17 @@ export default function () {
         const totalPages = pagination.totalPages
         if (isNext) {
             if (currentPage < totalPages) {
-                paginate.page = pagination.page + 1
+                pagination.page = currentPage + 1
             }
         } else {
-            if (currentPage > 0) {
-                paginate.page = pagination.page - 1
+            if (currentPage > 1) { // No permitir ir por debajo de la página 1
+                pagination.page = currentPage - 1
             }
         }
         await paginate(token)
     }
 
-    const isFirstPage = computed(() => pagination.page === 0)
+    const isFirstPage = computed(() => pagination.page === 1)
     const isLastPage = computed(() => pagination.page === pagination.totalPages)
 
     return {
