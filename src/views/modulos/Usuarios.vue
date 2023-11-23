@@ -1,8 +1,7 @@
-
 <template>
-    <NavBar titleModule="Empleados" />
+    <NavBar titleModule="Usuarios" />
     <div class="flex justify-center items-center content-center h-screen">
-        Empleados... esssta
+        Usuarios... esssta
     </div>
 </template>
 

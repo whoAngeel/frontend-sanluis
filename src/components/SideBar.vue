@@ -19,13 +19,32 @@
                         </RouterLink>
                     </li>
                     <li>
-                        <RouterLink to="/empleados"
-                            class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                            <span class="inline-flex items-center justify-center h-12 w-12 ">
-                                <font-awesome-icon :icon="['fas', 'people-group']" />
-                            </span>
-                            <span class=" font-medium">Empleados</span>
-                        </RouterLink>
+                       
+                        <div class="collapse">
+                            <input type="checkbox">
+                            <div class="collapse-title text-xl font-medium">
+                                Empleados
+                            </div>
+                            <div class="collapse-content">
+                                <RouterLink to="/empleados"
+                                    class="flex flex-row items-center transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                    <span class="inline-flex items-center justify-center h-12 w-12">
+                                        <font-awesome-icon :icon="['fas', 'people-group']" />
+                                    </span>
+                                    <span class=" font-medium">Empleados</span>
+                                </RouterLink>
+                                <RouterLink to="/usuarios"
+                                    class="flex flex-row items-center transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                                    <span class="inline-flex items-center justify-center h-12 w-12">
+                                        <font-awesome-icon :icon="['fas', 'people-group']" />
+                                    </span>
+                                    <span class=" font-medium">Usuarios</span>
+                                </RouterLink>
+                              
+                            </div>
+                        </div>
+                      
+                    
                     </li>
                     <li>
                         <div class="collapse">

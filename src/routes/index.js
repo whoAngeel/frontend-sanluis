@@ -1,6 +1,7 @@
 import Home from '../views/HomeView.vue'
 import Login from '../views/LoginView.vue'
 import EmpleadosView from '../views/modulos/Empleados.vue'
+import UsuariosView from '../views/modulos/Usuarios.vue'
 import ProductosView from '../views/modulos/Productos.vue'
 import { useUserStore } from '../stores/userStore'
 
@@ -22,7 +23,16 @@ const routes = [
                 meta: {
                     roles: ['admin']
                 }
-            }, {
+            },
+            {
+                path: 'usuarios',
+                name: "Usuarios",
+                component: UsuariosView,
+                meta: {
+                    roles: ['admin']
+                }
+            }
+            ,{
                 path: 'productos',
                 name: "Productos",
                 component: ProductosView,
