@@ -17,7 +17,8 @@ export const useEmpleadosStore = defineStore('empleados', () => {
                 Authorization: `Bearer ${token}`
             },
             method: "GET",
-            url: `/api/employees`
+            url: `/api/employees`,
+
         }).then(res => {
             empleadosLista.value = res.data
         }).catch(err => {
@@ -25,27 +26,31 @@ export const useEmpleadosStore = defineStore('empleados', () => {
         })
     }
 
-    const createEmpleado = (body) => {
-        axios.request({
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
-            method: "POST",
-            url: "/api/employees"
-        }).then(res => {
-            const nuevoEmpleado = res.data?.employee
+    async function crearEmpleado(body) {
+        try {
+            const response = await axios.request({
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                method: "POST",
+                url: "/api/employees",
+                data: body
+            })
+
+            const nuevoEmpleado = response.data?.employee
             empleadosLista.value.push(nuevoEmpleado)
             toast.success("Empleado Creado")
-        }).catch(err => {
-            console.log(err);
+        } catch (error) {
+            console.log(error);
             toast.error("Error al crear el empleado")
-        })
+        }
     }
 
 
 
     return {
         empleadosLista,
-        fetchEmpleados
+        fetchEmpleados,
+        crearEmpleado
     }
 })

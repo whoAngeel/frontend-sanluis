@@ -6,7 +6,7 @@
                 <label class="font-bold pr-4">
                     Nombre(s)*
                 </label>
-                <input v-bind="names" type="text" class="input input-sm w-full">
+                <input v-bind="names" type="text" class="input input-sm uppercase w-full">
                 <label class="label h-6 static">
                     <span class="label-text-alt text-rose-600 absolute">{{ errors.names }}</span>
                 </label>
@@ -15,7 +15,7 @@
                 <label class="font-bold pr-4">
                     Apellidos*
                 </label>
-                <input type="text" class="input input-sm w-full" v-bind="lastnames">
+                <input type="text" class="input uppercase input-sm w-full" v-bind="lastnames">
                 <label class="label h-6 static">
                     <span class="label-text-alt text-rose-600 absolute">{{ errors.lastnames }}</span>
                 </label>
@@ -42,7 +42,7 @@
                 <label class="font-bold pr-4">
                     CURP*
                 </label>
-                <input type="text" class="input input-sm w-full" v-bind="curp">
+                <input type="text" class="input input-sm w-full uppercase" v-bind="curp">
                 <label class="label h-6 static">
                     <span class="label-text-alt text-rose-600 absolute">{{ errors.curp }}</span>
                 </label>
@@ -117,7 +117,11 @@
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 import * as yup from 'yup';
+import { useEmpleadosStore } from '../../stores/empleados'
 
+const empStore = useEmpleadosStore()
+
+const { crearEmpleado } = empStore
 const rol = ref("")
 
 const { errors, defineInputBinds, isSubmitting, handleSubmit } = useForm({
@@ -156,11 +160,11 @@ const curp = defineInputBinds("curp")
 const username = defineInputBinds("username")
 const password = defineInputBinds("password")
 
-const onSubmit = handleSubmit((values) => {
+const onSubmit = handleSubmit(async (values) => {
     const body = {
-        fullname: values.names + values.lastnames,
-        curp: values.curp,
-        rfc: values.rfc,
+        fullname: values.names.toUpperCase() + " " + values.lastnames.toUpperCase(),
+        curp: values.curp.toLowerCase(),
+        rfc: values.rfc.toUpperCase(),
         phone: values.phone,
         email: values.email,
         salary: values.salary,
@@ -171,7 +175,9 @@ const onSubmit = handleSubmit((values) => {
         }
     };
 
-    console.log(body);
+    // console.log(body);
+    await crearEmpleado(body)
+
 })
 
 </script>
