@@ -1,7 +1,7 @@
 <template>
     <Modal :show="showDeleteModal" @close="toggleDeleteModal()" size="md">
         <template #title>
-            <h3 class="text-xl font-bold text-center ">Editar empleado</h3>
+            <h3 class="text-xl font-bold text-center ">Eliminar producto</h3>
         </template>
         <template #closeModal>
             <div class="relative">
@@ -14,6 +14,24 @@
         </template>
         <template #body>
             <DeleteProduct :producto="producto" @closeModal="toggleDeleteModal()" />
+        </template>
+    </Modal>
+
+    <Modal :show="showEditModal" @close="toggleEditModal()" size="lg">
+        <template #title>
+            <h3 class="text-xl font-bold text-center ">Editar empleado</h3>
+        </template>
+        <template #closeModal>
+            <div class="relative">
+
+                <button class="btn btn-sm text-xl hover:text-2xl btn-circle btn-ghost absolute right-1 top-0"
+                    @click="toggleEditModal()">
+                    <font-awesome-icon :icon="['fas', 'xmark']" />
+                </button>
+            </div>
+        </template>
+        <template #body>
+            <EditProduct :producto="producto" @closeModal="toggleEditModal()" />
         </template>
     </Modal>
     <div class="overflow-x-auto">
@@ -45,7 +63,7 @@
                         <button class="btn btn-xs bg-rose-500 text-white" @click="seleccionarEliminar(product.id)">
                             Eliminar
                         </button>
-                        <button class="btn btn-xs bg-sky-500 text-white">
+                        <button @click="seleccionarEdit(product.id)" class="btn btn-xs bg-sky-500 text-white">
                             Editar
                         </button>
                     </th>
@@ -73,6 +91,7 @@ import Modal from '../Modal.vue';
 import { useToggle } from '@vueuse/core'
 import { ref } from 'vue';
 import DeleteProduct from '../forms/DeleteProduct.vue'
+import EditProduct from '../forms/EditProduct.vue'
 import { useProductsStore } from '../../stores/products'
 
 const [showDeleteModal, toggleDeleteModal] = useToggle()
@@ -85,7 +104,7 @@ const props = defineProps(['products'])
 
 const seleccionarEdit = async (id) => {
     producto.value = await store.getProductoById(id)
-    console.log(producto.value);
+    // console.log(producto.value);
     toggleEditModal()
 }
 

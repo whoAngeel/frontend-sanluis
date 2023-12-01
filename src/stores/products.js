@@ -99,6 +99,24 @@ export const useProductsStore = defineStore('products', () => {
         }
     }
 
+    const updateProducto = async (id, changes) => {
+        try {
+            const response = await axios.request({
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                method: "PATCH",
+                url: `/api/products/${id}`,
+                data: changes
+            });
+            fetchProductos();
+            toast.success("Producto actualizado correctamente")
+        } catch (error) {
+            toast.error("Error al actualizar el producto")
+            console.log(error);
+        }
+    }
+
 
     return {
         productos,
@@ -106,6 +124,6 @@ export const useProductsStore = defineStore('products', () => {
         crear,
         searchByID,
         deleteProduct,
-        getProductoById
+        getProductoById, updateProducto
     }
 })
