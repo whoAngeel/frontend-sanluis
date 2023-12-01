@@ -88,6 +88,7 @@ const login = () => {
         $cookies.set('auth', userStore.state.token)
         $cookies.set('role', userStore.state.role)
         $cookies.set('user', { ...user, token })
+        $cookies.set("employeeId", employeeStore.state.id)
         // setUser(user)
         router.push('/')
     }).catch((error) => {
@@ -103,6 +104,7 @@ const login = () => {
 onBeforeMount(() => {
     $cookies.remove('auth')
     $cookies.remove('role')
+    $cookies.remove('employeeId')
     $cookies.remove('user')
 })
 </script>

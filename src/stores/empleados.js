@@ -20,7 +20,10 @@ export const useEmpleadosStore = defineStore('empleados', () => {
             url: `/api/employees`,
 
         }).then(res => {
-            empleadosLista.value = res.data
+            const employeesWithoutAdminUser = res.data.filter(employee => {
+                return !employee.user || (employee.user.role !== 'admin');
+            });
+            empleadosLista.value = employeesWithoutAdminUser
         }).catch(err => {
             console.log(err);
         })
