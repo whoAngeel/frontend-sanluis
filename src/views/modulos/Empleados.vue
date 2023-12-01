@@ -16,7 +16,7 @@
             </div>
         </template>
         <template #body>
-            <CreateEmployeesForm />
+            <CreateEmployeesForm @closeModal="toggleCreateModal()" />
         </template>
     </Modal>
     <label @click="toggleCreateModal()" class="btn btn-primary">Crear empleado</label>
