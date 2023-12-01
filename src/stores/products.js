@@ -24,9 +24,52 @@ export const useProductsStore = defineStore('products', () => {
         })
     }
 
+    async function crear(body) {
+        try {
+            const response = await axios.request({
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                method: "POST",
+                url: "/api/products",
+                data: body
+            })
+            // const nuevoProducto = response.data
+            // const prod = await searchByID(nuevoProducto?.id)
+            // productos.value.push(prod)
+            fetchProductos()
+            toast.success("Producto creado correctamente")
+        } catch (error) {
+            console.log(error);
+            toast.error("Error al crear un producto")
+        }
+    }
+
+    const searchByID = async (id) => {
+        try {
+            const response = await axios.request({
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                method: "GET",
+                url: "/api/products/search",
+                data: {
+                    "id": id
+                }
+            })
+            console.log(response.data);
+            return response.data
+        } catch (error) {
+            toast.error("Error al encontrar el producto")
+            console.log(error.response);
+        }
+    }
+
 
     return {
         productos,
-        fetchProductos
+        fetchProductos,
+        crear,
+        searchByID
     }
 })

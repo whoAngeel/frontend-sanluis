@@ -39,7 +39,7 @@ export const useEmpleadosStore = defineStore('empleados', () => {
 
             const nuevoEmpleado = response.data?.employee
             empleadosLista.value.push(nuevoEmpleado)
-            toast.success("Empleado Creado")
+            toast.success("Empleado creado correctamente")
         } catch (error) {
             console.log(error);
             toast.error("Error al crear el empleado")

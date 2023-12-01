@@ -16,13 +16,12 @@
         </template>
         <template #body>
             <!-- <CreateEmployeesForm @closeModal="toggleCreateModal()" /> -->
-            crear producto
+            <CreateProductForm @closeModal="toggleCreateModal()" />
         </template>
     </Modal>
     <label @click="toggleCreateModal()" class="btn btn-primary">Crear producto</label>
     <div class="flex justify-center content-center h-screen">
-        lista
-        <!-- <EmployeesTable :employees="store.empleadosLista" /> -->
+        <ProductsTable :products="store.productos" />
     </div>
 </template>
 
@@ -30,14 +29,25 @@
 <script setup>
 import NavBar from '../../components/navbars/NavBar.vue';
 import { useToggle } from '@vueuse/core'
-import { onBeforeMount } from 'vue'
+import { onBeforeMount, onMounted } from 'vue'
 import { useProductsStore } from '../../stores/products'
+import { useCategoriasStore } from '../../stores/categorias'
+import { useProveedoresStore } from '../../stores/proveedores'
 import Modal from '../../components/Modal.vue';
+import ProductsTable from '../../components/tables/ProductsTable.vue';
+import CreateProductForm from '../../components/forms/CreateProductForm.vue';
 
 const store = useProductsStore()
+const catStore = useCategoriasStore()
+const provStore = useProveedoresStore()
+// const pr
 const [showCreateModal, toggleCreateModal] = useToggle()
 
 onBeforeMount(() => {
     store.fetchProductos()
+    catStore.fetchCategorias()
+    provStore.fetchProveedores()
 })
+
+
 </script>
