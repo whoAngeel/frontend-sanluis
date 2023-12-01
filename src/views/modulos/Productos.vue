@@ -1,13 +1,53 @@
 
 <template>
     <NavBar titleModule="Productos" />
-    <div class="flex justify-center items-center content-center h-screen">
-        Productos...
+    <Modal :show="showCreateModal" @close="toggleCreateModal()" size="lg">
+        <template #title>
+            <h3 class="text-xl font-bold text-center ">Crear producto</h3>
+        </template>
+        <template #closeModal>
+            <div class="relative">
+
+                <button class="btn btn-sm text-xl hover:text-2xl btn-circle btn-ghost absolute right-1 top-0"
+                    @click="toggleCreateModal()">
+                    <font-awesome-icon :icon="['fas', 'xmark']" />
+                </button>
+            </div>
+        </template>
+        <template #body>
+            <!-- <CreateEmployeesForm @closeModal="toggleCreateModal()" /> -->
+            <CreateProductForm @closeModal="toggleCreateModal()" />
+        </template>
+    </Modal>
+    <label @click="toggleCreateModal()" class="btn btn-primary">Crear producto</label>
+    <div class="flex justify-center content-center h-screen">
+        <ProductsTable :products="store.productos" />
     </div>
 </template>
 
 
 <script setup>
 import NavBar from '../../components/navbars/NavBar.vue';
+import { useToggle } from '@vueuse/core'
+import { onBeforeMount, onMounted } from 'vue'
+import { useProductsStore } from '../../stores/products'
+import { useCategoriasStore } from '../../stores/categorias'
+import { useProveedoresStore } from '../../stores/proveedores'
+import Modal from '../../components/Modal.vue';
+import ProductsTable from '../../components/tables/ProductsTable.vue';
+import CreateProductForm from '../../components/forms/CreateProductForm.vue';
+
+const store = useProductsStore()
+const catStore = useCategoriasStore()
+const provStore = useProveedoresStore()
+// const pr
+const [showCreateModal, toggleCreateModal] = useToggle()
+
+onBeforeMount(() => {
+    store.fetchProductos()
+    catStore.fetchCategorias()
+    provStore.fetchProveedores()
+})
+
 
 </script>
