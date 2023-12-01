@@ -65,11 +65,47 @@ export const useProductsStore = defineStore('products', () => {
         }
     }
 
+    const deleteProduct = async (id) => {
+        try {
+            const response = await axios.request({
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                method: "DELETE",
+                url: `/api/products/${id}`,
+            })
+            fetchProductos()
+            toast.success("Producto eliminado correctamente")
+        } catch (error) {
+            console.log(error);
+            toast.error("Error al eliminar un producto")
+        }
+    }
+
+    const getProductoById = async (id) => {
+        try {
+            const response = await axios.request({
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                method: "GET",
+                url: `/api/products/${id}`
+            })
+            console.log(response.data);
+            return response.data
+        } catch (error) {
+            toast.error("Error al encontrar el producto")
+            console.log(error);
+        }
+    }
+
 
     return {
         productos,
         fetchProductos,
         crear,
-        searchByID
+        searchByID,
+        deleteProduct,
+        getProductoById
     }
 })

@@ -1,4 +1,21 @@
 <template>
+    <Modal :show="showDeleteModal" @close="toggleDeleteModal()" size="md">
+        <template #title>
+            <h3 class="text-xl font-bold text-center ">Editar empleado</h3>
+        </template>
+        <template #closeModal>
+            <div class="relative">
+
+                <button class="btn btn-sm text-xl hover:text-2xl btn-circle btn-ghost absolute right-1 top-0"
+                    @click="toggleDeleteModal()">
+                    <font-awesome-icon :icon="['fas', 'xmark']" />
+                </button>
+            </div>
+        </template>
+        <template #body>
+            <DeleteProduct :producto="producto" @closeModal="toggleDeleteModal()" />
+        </template>
+    </Modal>
     <div class="overflow-x-auto">
         <table class="table table-xs">
             <thead>
@@ -25,7 +42,7 @@
                     <td>{{ product.provider.name }}</td>
                     <td>{{ product.category.name }}</td>
                     <th>
-                        <button class="btn btn-xs bg-rose-500 text-white">
+                        <button class="btn btn-xs bg-rose-500 text-white" @click="seleccionarEliminar(product.id)">
                             Eliminar
                         </button>
                         <button class="btn btn-xs bg-sky-500 text-white">
@@ -39,10 +56,12 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Precio de venta</th>
+                    <th>Precio de compra</th>
                     <th>Stock</th>
                     <th>Marca</th>
                     <th>Proveedor</th>
                     <th>Categoria</th>
+                    <th>Acciones</th>
                 </tr>
             </tfoot>
         </table>
@@ -50,5 +69,28 @@
 </template>
 
 <script setup>
+import Modal from '../Modal.vue';
+import { useToggle } from '@vueuse/core'
+import { ref } from 'vue';
+import DeleteProduct from '../forms/DeleteProduct.vue'
+import { useProductsStore } from '../../stores/products'
+
+const [showDeleteModal, toggleDeleteModal] = useToggle()
+const [showEditModal, toggleEditModal] = useToggle()
+
+const producto = ref({})
+const store = useProductsStore()
+
 const props = defineProps(['products'])
+
+const seleccionarEdit = async (id) => {
+    producto.value = await store.getProductoById(id)
+    console.log(producto.value);
+    toggleEditModal()
+}
+
+const seleccionarEliminar = async (id) => {
+    producto.value = await store.getProductoById(id)
+    toggleDeleteModal()
+}
 </script>
