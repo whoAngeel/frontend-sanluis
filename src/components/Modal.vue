@@ -1,6 +1,6 @@
 <template>
-    <div ref="modal" v-if="show" class="fixed inset-0 flex items-center justify-center bg-slate-800 z-50 background">
-        <div class="bg-white w-80 p-4 rounded-lg shadow-lg sm:w-5/12 lg:w-4/12 md:6/12">
+    <div ref="modal" v-if="show" class="fixed inset-0 flex items-center justify-center bg-slate-800 z-10 background">
+        <div :class="['bg-white p-4 rounded-lg shadow-lg', getSizeClass()]">
             <slot class="" name="closeModal"></slot>
 
             <slot name="title"></slot>
@@ -20,6 +20,10 @@ const props = defineProps({
     show: {
         type: Boolean,
         default: false
+    },
+    size: {
+        type: String,
+        default: "md"
     }
 })
 
@@ -31,6 +35,17 @@ function clickListener(e) {
 function closeOnEscapeListener(e) {
     if (e.key === 'Escape') {
         emits('close')
+    }
+}
+
+function getSizeClass() {
+    switch (props.size) {
+        case 'lg':
+            return 'w-3/5'
+        case 'md':
+            return 'w-2/5';
+        default:
+            return 'w-2/5';
     }
 }
 

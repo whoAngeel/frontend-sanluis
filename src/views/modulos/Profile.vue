@@ -1,7 +1,7 @@
 <template>
     <NavBar titleModule="Perfil de usuario" />
     <div class="flex justify-center items-center content-center h-screen">
-        {{ store.getEmplme oyee }}
+        {{ store.getEmployee }}
     </div>
 </template>
 

@@ -99,9 +99,12 @@ const router = useRouter()
 
 const logout = () => {
     // console.log('logout');
-    userStore.$reset();
-    employeeStore.$reset()
-    catStore.$reset()
+    // userStore.$reset();
+    // employeeStore.$reset()
+    // catStore.$reset()
+    $cookies.remove('auth')
+    $cookies.remove('role')
+    $cookies.remove('user')
     router.push('/login')
 }
 

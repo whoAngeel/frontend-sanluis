@@ -79,10 +79,7 @@ const login = () => {
         username: username.value,
         password: password.value
     }).then((res) => {
-        // console.log(res.data);
         isLoading.value = false
-        // console.log(res.data.token);
-        // console.log(res.data.user);
         const { user, token } = res.data
         userStore.setId(user.id)
         userStore.setRole(user.role)
@@ -90,6 +87,7 @@ const login = () => {
         employeeStore.setEmployee(userStore.state.token)
         $cookies.set('auth', userStore.state.token)
         $cookies.set('role', userStore.state.role)
+        $cookies.set('user', { ...user, token })
         // setUser(user)
         router.push('/')
     }).catch((error) => {
@@ -105,5 +103,6 @@ const login = () => {
 onBeforeMount(() => {
     $cookies.remove('auth')
     $cookies.remove('role')
+    $cookies.remove('user')
 })
 </script>
