@@ -4,22 +4,14 @@
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
                 <label class="font-bold pr-4">
-                    Nombre(s)*
+                    Nombre completo*
                 </label>
-                <input v-bind="names" type="text" class="input input-sm uppercase w-full">
+                <input v-bind="fullname" type="text" class="input input-sm uppercase w-full">
                 <label class="label h-6 static">
-                    <span class="label-text-alt text-rose-600 absolute">{{ errors.names }}</span>
+                    <span class="label-text-alt text-rose-600 absolute">{{ errors.fullname }}</span>
                 </label>
             </div>
-            <div>
-                <label class="font-bold pr-4">
-                    Apellidos*
-                </label>
-                <input type="text" class="input uppercase input-sm w-full" v-bind="lastnames">
-                <label class="label h-6 static">
-                    <span class="label-text-alt text-rose-600 absolute">{{ errors.lastnames }}</span>
-                </label>
-            </div>
+
             <div>
                 <label class="font-bold pr-4">
                     Email*
@@ -103,13 +95,75 @@
         </div>
         <div class="flex justify-end">
             <button class="btn btn-md btn-primary" @click="onSubmit()" :disabled="isSubmitting">
-                {{ isSubmitting ? "Creando..." : "Crear" }}
+                {{ isSubmitting ? "Editando..." : "Editar" }}
             </button>
         </div>
     </form>
 </template>
 
 <script setup>
+import { useForm } from 'vee-validate';
+import { ref } from 'vue';
+import * as yup from 'yup';
+import { useEmpleadosStore } from '../../stores/empleados'
+
+const empStore = useEmpleadosStore()
+
 const props = defineProps(['empleado'])
 const emits = defineEmits(['closeModal'])
+
+const rol = ref(props.empleado.user.role)
+
+const { errors, defineInputBinds, isSubmitting, handleSubmit } = useForm({
+    validationSchema: yup.object({
+        fullname: yup.string().min(3).required(),
+        email: yup.string().email().required(),
+        phone: yup.number(),
+        salary: yup.number().default(0),
+        rfc: yup.string(),
+        curp: yup.string().required(),
+        username: yup.string().required(),
+        password: yup.string().min(5).required()
+    }),
+    initialValues: {
+        fullname: props.empleado.fullname,
+        email: props.empleado.email,
+        phone: props.empleado.phone,
+        salary: props.empleado.salary,
+        rfc: props.empleado.rfc,
+        curp: props.empleado.curp,
+        username: props.empleado.user.username,
+        password: ""
+    }
+})
+
+const fullname = defineInputBinds("fullname")
+const email = defineInputBinds("email")
+const phone = defineInputBinds("phone")
+const salary = defineInputBinds("salary")
+const rfc = defineInputBinds("rfc")
+const curp = defineInputBinds("curp")
+const username = defineInputBinds("username")
+const password = defineInputBinds("password")
+
+const onSubmit = handleSubmit(async (values) => {
+    const body = {
+        fullname: values.fullname.toUpperCase(),
+        curp: values.curp.toUpperCase(),
+        rfc: values.rfc.toUpperCase(),
+        phone: values.phone,
+        email: values.email,
+        salary: values.salary,
+        user: {
+            username: values.username,
+            password: values.password,
+            role: rol.value
+        }
+    };
+
+    console.log(body);
+    // emits('closeModal')
+    // await crearEmpleado(body)
+
+})
 </script>

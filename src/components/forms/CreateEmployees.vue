@@ -124,15 +124,15 @@ const rol = ref("")
 
 const { errors, defineInputBinds, isSubmitting, handleSubmit } = useForm({
     validationSchema: yup.object({
-        names: yup.string().min(3).required(),
-        lastnames: yup.string().min(3).required(),
-        email: yup.string().email().required(),
-        phone: yup.number(),
-        salary: yup.number().default(0),
-        rfc: yup.string(),
-        curp: yup.string().required(),
-        username: yup.string().required(),
-        password: yup.string().min(5).required()
+        names: yup.string().min(3).required("Este campo es obligatorio"),
+        lastnames: yup.string().min(3).required("Este campo es obligatorio"),
+        email: yup.string().email("Debe ser un email valido").required("Este campo es obligatorio"),
+        phone: yup.number("Debe ser un numero de telefono"),
+        salary: yup.number("Este campo debe ser una cantidad").default(0),
+        rfc: yup.string().min(13).max(13),
+        curp: yup.string().required("Este campo es obligatorio").min(18).max(18),
+        username: yup.string().required("Este campo es obligatorio"),
+        password: yup.string().min(8).required("Este campo es obligatorio")
     }),
     initialValues: {
         names: "",

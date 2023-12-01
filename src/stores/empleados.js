@@ -109,7 +109,9 @@ export const useEmpleadosStore = defineStore('empleados', () => {
             })
             return response.data
         } catch (error) {
+            console.log(error);
             toast.error("Error al obtener el empleado")
+            return
         }
     }
 
