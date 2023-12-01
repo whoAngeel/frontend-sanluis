@@ -58,7 +58,7 @@
             </div>
             <div>
                 <label class="font-bold pr-4">
-                    Salary
+                    Salario
                 </label>
                 <input type="number" class="input input-sm w-full" v-bind="salary">
                 <label class="label h-6 static">
@@ -106,10 +106,6 @@
                 {{ isSubmitting ? "Creando..." : "Crear" }}
             </button>
         </div>
-
-
-
-
     </form>
 </template>
 
@@ -120,6 +116,8 @@ import * as yup from 'yup';
 import { useEmpleadosStore } from '../../stores/empleados'
 
 const empStore = useEmpleadosStore()
+
+const emits = defineEmits(['closeModal'])
 
 const { crearEmpleado } = empStore
 const rol = ref("")

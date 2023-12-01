@@ -7,7 +7,8 @@
                     <th>Nombre</th>
                     <th>Contacto</th>
                     <th>Salario</th>
-                    <th></th>
+                    <th>Informacion</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,15 +31,18 @@
                         </div>
                     </td>
                     <td class="font-bold">${{ employee.salary }}</td>
+                    <td>
+                        <div>
+                            <div class="font-bold">{{ employee.curp }}</div>
+                            <div class="text-sm opacity-50">{{ employee?.rfc }}</div>
+                        </div>
+                    </td>
                     <th>
-                        <button class="btn btn-ghost btn-xs">details</button>
+                        <button class="btn btn-xs bg-rose-500 text-white">Eliminar</button>
+                        <button class="btn btn-xs bg-sky-500 text-white">Editar</button>
                     </th>
                 </tr>
-
-
             </tbody>
-
-
         </table>
     </div>
 </template>
