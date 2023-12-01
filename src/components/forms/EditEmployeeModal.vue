@@ -123,7 +123,7 @@ const { errors, defineInputBinds, isSubmitting, handleSubmit } = useForm({
         rfc: yup.string(),
         curp: yup.string().required(),
         username: yup.string().required(),
-        password: yup.string().min(5).required()
+        password: yup.string().min(8).required()
     }),
     initialValues: {
         fullname: props.empleado.fullname,
@@ -147,13 +147,17 @@ const username = defineInputBinds("username")
 const password = defineInputBinds("password")
 
 const onSubmit = handleSubmit(async (values) => {
-    const body = {
-        fullname: values.fullname.toUpperCase(),
-        curp: values.curp.toUpperCase(),
-        rfc: values.rfc.toUpperCase(),
-        phone: values.phone,
-        email: values.email,
-        salary: values.salary,
+    const changes = {
+        employee: {
+
+            fullname: values.fullname.toUpperCase(),
+            curp: values.curp.toUpperCase(),
+            rfc: values.rfc.toUpperCase(),
+            phone: values.phone,
+            email: values.email,
+            salary: values.salary,
+        },
+
         user: {
             username: values.username,
             password: values.password,
@@ -161,9 +165,9 @@ const onSubmit = handleSubmit(async (values) => {
         }
     };
 
-    console.log(body);
-    // emits('closeModal')
-    // await crearEmpleado(body)
+    // console.log(changes);
+    emits('closeModal')
+    await empStore.editarEmpleado(props.empleado.id, changes)
 
 })
 </script>

@@ -101,7 +101,7 @@ const props = defineProps(['employees'])
 const seleccionarEdit = async (id) => {
     empleado.value = await store.getEmpleado(id)
     toggleEditModal()
-    console.log(empleado.value);
+    // console.log(empleado.value);
 }
 
 const seleccionarEliminar = async (id) => {

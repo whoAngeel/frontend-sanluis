@@ -92,6 +92,15 @@ export const useEmpleadosStore = defineStore('empleados', () => {
                 url: `/api/users/${empleado.userId}`,
                 data: changes?.user
             })
+            const empleadoActualizado = await getEmpleado(id)
+            const index = empleadosLista.value.findIndex((e) => e.id === empleado.id);
+            if (index !== -1) {
+                // Reemplazar el objeto antiguo con el nuevo
+                empleadosLista.value.splice(index, 1, empleadoActualizado);
+                toast.success("Empleado actualizado correctamente");
+            } else {
+                toast.error("Error al actualizar el empleado en el Store");
+            }
         } catch (error) {
             console.log(err);
             toast.error("Error al actualizar el empleado")
