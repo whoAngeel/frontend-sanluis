@@ -15,7 +15,7 @@ export default {
         themes: ["light", "dark", "corporate", {
             "sanluis": {
 
-                "primary": "#F9B572",
+                "primary": "#80B3FF",
 
                 "secondary": "#A7D397",
 
@@ -29,7 +29,7 @@ export default {
 
                 "success": "#5cbc5f",
 
-                "warning": "#ffcc00",
+                "warning": "#80a5ff",
 
                 "error": "#fb4b71",
             },
