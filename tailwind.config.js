@@ -15,15 +15,15 @@ export default {
         themes: ["light", "dark", "corporate", {
             "sanluis": {
 
-                "primary": "#80B3FF",
+                "primary": "#27374D",
 
-                "secondary": "#A7D397",
+                "secondary": "#427D9D",
 
-                "accent": "#64CCC5",
+                "accent": "#526D82",
 
                 "neutral": "#16171d",
 
-                "base-100": "#FAF8ED",
+                "base-100": "#DDE6ED",
 
                 "info": "#80B3FF",
 

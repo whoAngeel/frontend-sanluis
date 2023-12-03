@@ -1,6 +1,6 @@
 
 <template>
-    <NavBar titleModule="Empleados" />
+    <NavBar titleModule="Usuarios" />
 
     <Modal :show="showCreateModal" @close="toggleCreateModal()" size="lg">
         <template #title>
@@ -9,7 +9,7 @@
         <template #closeModal>
             <div class="relative">
 
-                <button class="btn btn-sm text-xl hover:text-2xl btn-circle btn-ghost absolute right-1 top-0"
+                <button class="btn btn-sm text-xl hover:text-2xl btn-circle btn-ghost absolute right-1 top-1 flex-auto"
                     @click="toggleCreateModal()">
                     <font-awesome-icon :icon="['fas', 'xmark']" />
                 </button>
