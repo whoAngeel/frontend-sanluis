@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useToast } from 'vue-toastification'
 
 export const useVentaStore = defineStore('venta', () => {
@@ -44,20 +44,25 @@ export const useVentaStore = defineStore('venta', () => {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
-                method: "GET",
+                method: "POST",
                 url: "/api/products/search",
-                data: JSON.stringify({
+                data: {
                     name: nombre,
-                })
+                }
             })
 
-            console.log(response.data)
-            // busqueda.value = response.data
+            // console.log(response.data)
+            busqueda.value = response.data
         } catch (error) {
-            console.log(error);
+            console.log(error.response);
             toast.error("Hubo un problema al buscar el producto")
         }
     }
+
+    const limpiarBusqueda = () => {
+        busqueda.value = []
+    }
+
 
 
     return {
@@ -66,7 +71,8 @@ export const useVentaStore = defineStore('venta', () => {
         carrito,
         busqueda,
         agregarProducto,
-        buscarByName
+        buscarByName,
+        limpiarBusqueda
     }
 })
 
