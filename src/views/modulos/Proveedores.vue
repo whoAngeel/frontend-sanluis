@@ -23,6 +23,31 @@
     <div class="flex justify-center content-center h-screen">
         <ProvidersTable :providers="proveedores" />
     </div>
+    -->
+    <Modal :show="showCreateModal" @close="toggleCreateModal()" size="lg">
+        <template #title>
+            <h3 class="text-xl font-bold text-center ">Crear proveedor</h3>
+        </template>
+        <template #closeModal>
+            <div class="relative">
+
+                <button class="btn btn-sm text-xl hover:text-2xl btn-circle btn-ghost absolute right-1 top-1 flex-auto"
+                    @click="toggleCreateModal()">
+                    <font-awesome-icon :icon="['fas', 'xmark']" />
+                </button>
+            </div>
+        </template>
+        <template #body>
+            <CrearProveedorForm @closeModal="toggleCreateModal()" />
+        </template>
+    </Modal>
+
+    <div class="flex flex-col justify-normal items-center  p-4">
+        <label @click="toggleCreateModal()" class="btn btn-primary ">Crear proveedor</label>
+
+
+        <ProveedorTabla :proveedors="store.proveedores" />
+    </div>
 </template>
 
 <script setup>
@@ -42,4 +67,12 @@ onBeforeMount(() => {
     fetchProveedores();
 })
 
+
+
+const store = useProveedoresStore()
+const [showCreateModal, toggleCreateModal] = useToggle()
+
+onBeforeMount(() => {
+    store.fetchProveedores()
+})
 </script>

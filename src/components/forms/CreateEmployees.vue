@@ -42,7 +42,7 @@
                 <label class="font-bold pr-4">
                     CURP*
                 </label>
-                <input type="text" class="input input-sm w-full uppercase" v-bind="curp">
+                <input type="text" class="input input-sm w-full uppercase" v-bind="curp" maxlength="18">
                 <label class="label h-6 static">
                     <span class="label-text-alt text-rose-600 absolute">{{ errors.curp }}</span>
                 </label>
@@ -51,7 +51,7 @@
                 <label class="font-bold pr-4">
                     RFC
                 </label>
-                <input type="text" class="input input-sm w-full uppercase" v-bind="rfc">
+                <input type="text" class="input input-sm w-full uppercase" v-bind="rfc" maxlength="13">
                 <label class="label h-6 static">
                     <span class="label-text-alt text-rose-600 absolute">{{ errors.rfc }}</span>
                 </label>

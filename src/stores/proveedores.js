@@ -14,10 +14,11 @@ export const useProveedoresStore = defineStore('proveedores', () => {
                 Authorization: `Bearer ${token}`
             },
             method: "GET",
-            url: "/api/providers"
+            url: `/api/providers`
         }).then(res => {
             proveedores.value = res.data
-        }).then(err => {
+        }).catch(err => {
+            toast.error("Error al cargar los proveedores" + err)
             console.log(err);
         })
     }
@@ -47,7 +48,8 @@ export const useProveedoresStore = defineStore('proveedores', () => {
         , crear
     }
 })
-
+/*
 if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(useProveedoresStore, import.meta.hot))
 }
+*/

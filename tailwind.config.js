@@ -12,24 +12,24 @@ export default {
     },
     plugins: [require("daisyui"), require('@tailwindcss/typography'), require('flowbite/plugin')],
     daisyui: {
-        themes: ["light", "dark", "winter", "corporate", {
-            "sanluis": {
+        themes: ["light", "dark", "corporate", {
+            "tiendazul": {
 
-                "primary": "#F9B572",
+                "primary": "#27374D",
 
-                "secondary": "#A7D397",
+                "secondary": "#427D9D",
 
-                "accent": "#64CCC5",
+                "accent": "#526D82",
 
                 "neutral": "#16171d",
 
-                "base-100": "#FAF8ED",
+                "base-100": "#DDE6ED",
 
                 "info": "#80B3FF",
 
                 "success": "#5cbc5f",
 
-                "warning": "#ffcc00",
+                "warning": "#80a5ff",
 
                 "error": "#fb4b71",
             },
