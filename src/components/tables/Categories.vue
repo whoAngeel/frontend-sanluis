@@ -50,7 +50,23 @@
 
 
 
+    <Modal :show="showEditModal" @close="toggleEditModal()" size="lg">
+        <template #title>
+            <h3 class="text-xl font-bold text-center ">Editar categoria</h3>
+        </template>
+        <template #closeModal>
+            <div class="relative">
 
+                <button class="btn btn-sm text-xl hover:text-2xl btn-circle btn-ghost absolute right-1 top-0"
+                    @click="toggleEditModal()">
+                    <font-awesome-icon :icon="['fas', 'xmark']" />
+                </button>
+            </div>
+        </template>
+        <template #body>
+            <EditCategory :categoria="categoria" @closeModal="toggleEditModal()" />
+        </template>
+    </Modal>
     <Modal :show="showDeleteModal" @close="toggleModal()">
         <template v-slot:title>
             <h3 class="text-lg font-bold text-center mt-5">¿Estas seguro de eliminar esta categoria?</h3>
@@ -81,17 +97,26 @@ import { useToggle } from '@vueuse/core'
 import { ref, onMounted } from 'vue'
 import { useCategoriesStore } from '../../stores/categories'
 import usePagination from '../../composables/usePagination'
+import EditCategory from '../forms/EditCategory.vue';
+import { useCategoriasStore } from '../../stores/categorias';
+
 
 const catStore = useCategoriesStore()
 
 const [showDeleteModal, toggleModal] = useToggle()
+const [showEditModal, toggleEditModal] = useToggle()
+
 const idCat = ref(0)
+const store = useCategoriasStore()
+const categoria = ref({})
 
 const { categories } = defineProps(['categories'])
 const { results, setPage, paginate, page, isFirstPage, isLastPage, loaded } = usePagination()
 
-const editarCategoria = (id) => {
-    console.log(id);
+const editarCategoria = async (id) => {
+    categoria.value = await store.getCategori(id)
+    toggleEditModal()
+    //console.log(id);
 }
 const preguntarEliminar = (id) => {
     idCat.value = id

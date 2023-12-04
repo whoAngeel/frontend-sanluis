@@ -29,7 +29,7 @@ export default {
 
                 "success": "#5cbc5f",
 
-                "warning": "#ffcc00",
+                "warning": "#80a5ff",
 
                 "error": "#fb4b71",
             },

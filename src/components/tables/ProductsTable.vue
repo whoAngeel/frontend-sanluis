@@ -19,7 +19,7 @@
 
     <Modal :show="showEditModal" @close="toggleEditModal()" size="lg">
         <template #title>
-            <h3 class="text-xl font-bold text-center ">Editar empleado</h3>
+            <h3 class="text-xl font-bold text-center ">Editar producto</h3>
         </template>
         <template #closeModal>
             <div class="relative">
