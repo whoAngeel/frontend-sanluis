@@ -1,7 +1,7 @@
 <template>
     <NavBar titleModule="Punto de venta" />
     <div class="flex justify-center content-between h-screen ">
-        <button class="btn btn-primary" :disabled="ventaStore.venta" @click="generarVenta()">Generar Venta</button>
+        <!-- <button class="btn btn-primary" :disabled="ventaStore.venta" @click="generarVenta()">Generar Venta</button> -->
 
         <div class="static w-screen h-screen">
             <div class="card w-5/12 h-32 bg-base-100 shadow-xl absolute left-28 top-40">
@@ -23,14 +23,15 @@
                         </button>
                     </div>
 
-                    <ul v-if="productos.length > 0" class="mt-2">
+                    <ul v-if="productos.length > 0" class="mt-2 w-full">
                         <li v-for="item in productos" :key="item.id" class="py-2 pl-2  ">
                             <button @click="agregarCarrito(item)"
-                                class="btn btn-outline btn-success w-full flex justify-between  cursor-pointer">
+                                class="btn btn-outline  w-full flex justify-between  cursor-pointer">
                                 <span class=" truncate ">
                                     {{ item.name }}
                                 </span>
                                 <span class="">
+                                    <span class="badge mr-1">${{ item.salePrice }}</span>
                                     <div class="badge badge-secondary w-12" :class="{ 'badge-error': item.stock <= 1 }">
                                         {{ item.stock }}
                                     </div>
@@ -76,17 +77,29 @@
                             <div class="stat-title">Total a pagar</div>
                             <div class="stat-value">$ {{ total }}</div>
                         </div>
-                        <button class="btn btn-primary mr-6">Confirmar</button>
+                        <button class="btn btn-primary mr-6" :disabled="carrito.length == 0" @click="confirmarVenta()">
+                            <div v-if="realizandoVenta">
+                                <span class="loading loading-dots loading-lg"></span>
+                            </div>
+                            <div v-else>Confirmar</div>
+                        </button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="static w-screen h-screen">
+            <div class="absolute bottom-20 left-28 flex items-center content-center ">
+                <SalesTable />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { computed, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import NavBar from '../../components/navbars/NavBar.vue';
+import SalesTable from '../../components/tables/SalesTable.vue'
 import { useForm } from 'vee-validate';
 import { useToast } from 'vue-toastification'
 import * as yup from 'yup';
@@ -96,11 +109,12 @@ import axios from 'axios';
 const toast = useToast()
 
 const ventaStore = useVentaStore()
-const { carrito, busqueda, buscarByName } = ventaStore
+const { carrito, busqueda, buscarByName, venta, createVenta } = ventaStore
 
 const token = $cookies.get('user')?.token
 const productName = ref("")
 const productos = ref([])
+const realizandoVenta = ref(false)
 
 watch(productName, async (newNameProduct) => {
     try {
@@ -127,9 +141,40 @@ watch(productName, async (newNameProduct) => {
     }
 })
 
-watch(carrito, (newCarrito) => {
-    console.log(total.value);
-}, { deep: true })
+// watch(carrito, (newCarrito) => {
+//     console.log(total.value);
+// }, { deep: true })
+
+const confirmarVenta = async () => {
+    try {
+        realizandoVenta.value = true
+        if (carrito.length >= 1) {
+            await createVenta()
+            await Promise.all(carrito.map(async p => {
+                await axios.post('/api/sales/add-item', {
+                    saleId: ventaStore.venta.id,
+                    productId: p.id,
+                    amount: p.amount,
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+            }))
+        }
+
+        console.log("realizando venta");
+        realizandoVenta.value = false
+    } catch (error) {
+        realizandoVenta.value = false
+        console.log(error);
+        toast.error("Error al realizar la venta")
+    } finally {
+        ventaStore.vaciarCarrito()
+        ventaStore.fetchVentas()
+        ventaStore.limpiarVenta()
+    }
+}
 
 const total = computed(() => {
     if (carrito.length > 0) {
@@ -192,6 +237,9 @@ const limpiarBusqueda = () => {
     productos.value = []
 }
 
+onMounted(async () => {
+    await ventaStore.fetchVentas()
+})
 
 onUnmounted(() => {
     ventaStore.limpiarBusqueda()
