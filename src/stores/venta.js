@@ -1,18 +1,20 @@
 import axios from 'axios'
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useToast } from 'vue-toastification'
+import { useEmployeeStore } from './employee'
 
 export const useVentaStore = defineStore('venta', () => {
+    const storeEmployee = useEmployeeStore()
     let venta = ref({})
     let carrito = ref([])
     let busqueda = ref([])
+    let ventas = ref([])
     const token = $cookies.get('user')?.token
-    const idEmployee = $cookies.get('employeeId')
+    const idEmployee = storeEmployee.state.id
     const toast = useToast()
 
     const createVenta = async () => {
-        // console.log(idEmployee);
         try {
             const response = await axios.request({
                 headers: {
@@ -26,7 +28,7 @@ export const useVentaStore = defineStore('venta', () => {
             })
             venta.value = response.data
 
-            toast.success("Venta generada")
+            // toast.success("Venta generada")
         } catch (error) {
             console.log(error);
             toast.error("Error al generar la venta")
@@ -44,29 +46,59 @@ export const useVentaStore = defineStore('venta', () => {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
-                method: "GET",
+                method: "POST",
                 url: "/api/products/search",
-                data: JSON.stringify({
+                data: {
                     name: nombre,
-                })
+                }
             })
 
-            console.log(response.data)
-            // busqueda.value = response.data
+            // console.log(response.data)
+            busqueda.value = response.data
         } catch (error) {
-            console.log(error);
+            console.log(error.response);
             toast.error("Hubo un problema al buscar el producto")
         }
     }
 
+    const limpiarBusqueda = () => {
+        busqueda.value = []
+    }
+    const limpiarVenta = () => {
+        venta.value = {}
+    }
+    const vaciarCarrito = () => {
+        carrito.value = []
+    }
+
+    const fetchVentas = async () => {
+        try {
+            const response = await axios.get("/api/sales", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log(response.data);
+            ventas.value = response.data
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
 
     return {
+        fetchVentas,
         createVenta,
         venta,
+        ventas,
         carrito,
         busqueda,
         agregarProducto,
-        buscarByName
+        buscarByName,
+        limpiarBusqueda,
+        limpiarVenta,
+        vaciarCarrito
     }
 })
 
