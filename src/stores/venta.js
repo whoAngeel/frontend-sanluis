@@ -78,7 +78,7 @@ export const useVentaStore = defineStore('venta', () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log(response.data);
+            // console.log(response.data);
             ventas.value = response.data
         } catch (error) {
             console.log(error);
