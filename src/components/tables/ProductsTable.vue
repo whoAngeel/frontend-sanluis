@@ -34,10 +34,11 @@
             <EditProduct :producto="producto" @closeModal="toggleEditModal()" />
         </template>
     </Modal>
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto mt-8">
         <table class="table table-xs">
             <thead>
                 <tr>
+                    <th></th>
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Precio de venta</th>
@@ -50,9 +51,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="product in products" :key="product.id" class="font-semibold">
+                <tr v-for="product in products" :key="product.id" class="font-semibold ">
+                    <th>
+                        <div class="tooltip tooltip-error text-xs tooltip-right " data-tip="Poco stock">
+                            <span v-if="product.stock <= 1" class="badge badge-error gap-2">
+
+                                <font-awesome-icon :icon="['fas', 'triangle-exclamation']" />
+                            </span>
+                        </div>
+
+                    </th>
                     <th>{{ product.id }}</th>
-                    <td>{{ product.name }}</td>
+                    <td>{{ product.name }}
+
+                    </td>
                     <td>${{ product.salePrice }}</td>
                     <td>${{ product.purchasePrice }}</td>
                     <td>{{ product.stock }}</td>
@@ -71,6 +83,7 @@
             </tbody>
             <tfoot>
                 <tr>
+                    <th></th>
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Precio de venta</th>
