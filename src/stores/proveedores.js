@@ -34,12 +34,14 @@ export const useProveedoresStore = defineStore('proveedores', () => {
                     data: body
                 })
     
-                const nuevoProveedor = response.data
-                proveedores.value.push(nuevoProveedor)
+                //const nuevoProveedor = response.data
+                //proveedores.value.push(nuevoProveedor)
+                
+                fetchProductos()
                 toast.success("Proveedor creado correctamente")
             } catch (error) {
                 console.log(error);
-                toast.error("Error al crear el Proveedor"+error)
+                toast.error("Error al crear el Proveedor")
             }
         }
     
@@ -57,6 +59,7 @@ export const useProveedoresStore = defineStore('proveedores', () => {
                 const nuevosProveedors = proveedores.value.filter(user => user.id !== id)
                 proveedores.value = nuevosProveedors
                 // else toast.error("Error al eliminar el Proveedor")
+                fetchProductos()
                 toast.success("Proveedor elimininado correctamente")
             } catch (err) {
                 console.log(err);
@@ -75,7 +78,7 @@ export const useProveedoresStore = defineStore('proveedores', () => {
                     url: `/api/providers/${Proveedor.id}`,
                     data: changes?.employee
                 })
-
+/*
                 const ProveedorActualizado = await getProveedor(id)
                 const index = proveedores.value.findIndex((e) => e.id === Proveedor.id);
                 if (index !== -1) {
@@ -84,7 +87,10 @@ export const useProveedoresStore = defineStore('proveedores', () => {
                     toast.success("Proveedor actualizado correctamente");
                 } else {
                     toast.error("Error al actualizar el Proveedor en el Store");
-                }
+                }*/
+                fetchProductos()
+                toast.success("Proveedor actualizado correctamente");
+
             } catch (error) {
                 console.log(err);
                 toast.error("Error al actualizar el Proveedor")

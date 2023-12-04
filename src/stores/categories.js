@@ -23,7 +23,7 @@ export const useCategoriesStore = defineStore('categories', {
     actions: {
         addCategory(data, token) {
             this.loading = true
-            if (this.categories.length < 5) {
+            if (this.categories.length < 11) {
                 this.categories.push(data)
             }
             axios.post('/api/categories', data, {
