@@ -22,9 +22,29 @@ export const useProveedoresStore = defineStore('proveedores', () => {
         })
     }
 
+    const crear = async (body) => {
+        try {
+            const response = await axios.request({
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                method: "POST",
+                url: "/api/providers",
+                data: body
+            })
+            const nuevoProveedor = response.data
+            proveedores.value.push(nuevoProveedor)
+            toast.success("Proveedor creado correctamente")
+        } catch (error) {
+            console.log(error.response);
+            toast.error("Error al crear un producto")
+        }
+    }
+
     return {
         proveedores,
         fetchProveedores
+        , crear
     }
 })
 

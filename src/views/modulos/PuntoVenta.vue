@@ -97,7 +97,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onBeforeMount, onUnmounted, ref, watch } from 'vue';
 import NavBar from '../../components/navbars/NavBar.vue';
 import SalesTable from '../../components/tables/SalesTable.vue'
 import { useForm } from 'vee-validate';
@@ -241,8 +241,8 @@ const limpiarBusqueda = () => {
     productos.value = []
 }
 
-onMounted(async () => {
-    await ventaStore.fetchVentas()
+onBeforeMount(() => {
+    ventaStore.fetchVentas()
 })
 
 onUnmounted(() => {
