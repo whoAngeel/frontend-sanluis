@@ -34,14 +34,14 @@ export const useProveedoresStore = defineStore('proveedores', () => {
                     data: body
                 })
     
-                //const nuevoProveedor = response.data
-                //proveedores.value.push(nuevoProveedor)
+                const nuevoProveedor = response.data
+                proveedores.value.push(nuevoProveedor)
                 
-                fetchProductos()
+                //fetchProductos()
                 toast.success("Proveedor creado correctamente")
             } catch (error) {
                 console.log(error);
-                toast.error("Error al crear el Proveedor")
+                toast.error("Error al crear el Proveedor"+error)
             }
         }
     
@@ -59,7 +59,7 @@ export const useProveedoresStore = defineStore('proveedores', () => {
                 const nuevosProveedors = proveedores.value.filter(user => user.id !== id)
                 proveedores.value = nuevosProveedors
                 // else toast.error("Error al eliminar el Proveedor")
-                fetchProductos()
+                ///fetchProductos() //?
                 toast.success("Proveedor elimininado correctamente")
             } catch (err) {
                 console.log(err);
@@ -69,14 +69,14 @@ export const useProveedoresStore = defineStore('proveedores', () => {
     
         async function editarProveedor(id, changes) {
             try {
-                const Proveedor = await getProveedor(id)
+                //const Proveedor = await getProveedor(id)
                 const response = await axios.request({
                     headers: {
                         Authorization: `Bearer ${token}`
                     },
                     method: "PATCH",
-                    url: `/api/providers/${Proveedor.id}`,
-                    data: changes?.employee
+                    url: `/api/providers/${id}`,
+                    data: changes
                 })
 /*
                 const ProveedorActualizado = await getProveedor(id)
@@ -88,11 +88,12 @@ export const useProveedoresStore = defineStore('proveedores', () => {
                 } else {
                     toast.error("Error al actualizar el Proveedor en el Store");
                 }*/
-                fetchProductos()
-                toast.success("Proveedor actualizado correctamente");
+                //() ///?
+                fetchProveedores()
+                toast.success("Proveedor actualizado correctamente")
 
             } catch (error) {
-                console.log(err);
+                console.log(error);
                 toast.error("Error al actualizar el Proveedor")
             }
         }
