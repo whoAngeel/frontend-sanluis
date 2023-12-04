@@ -13,7 +13,7 @@ export default {
     plugins: [require("daisyui"), require('@tailwindcss/typography'), require('flowbite/plugin')],
     daisyui: {
         themes: ["light", "dark", "corporate", {
-            "sanluis": {
+            "tiendazul": {
 
                 "primary": "#27374D",
 

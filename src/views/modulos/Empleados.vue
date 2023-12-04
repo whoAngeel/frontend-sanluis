@@ -7,7 +7,7 @@
             <h3 class="text-xl font-bold text-center ">Crear empleado</h3>
         </template>
         <template #closeModal>
-            <div class="relative">
+            <div class="flex flex-col items-center justify-center h-full w-full my-12 relative">
 
                 <button class="btn btn-sm text-xl hover:text-2xl btn-circle btn-ghost absolute right-1 top-1 flex-auto"
                     @click="toggleCreateModal()">
