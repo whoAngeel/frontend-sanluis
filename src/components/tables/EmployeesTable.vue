@@ -88,7 +88,7 @@ import Modal from '../Modal.vue';
 import { useToggle } from '@vueuse/core'
 import EditEmployeeModal from '../forms/EditEmployeeModal.vue';
 import { ref } from 'vue';
-import { useEmpleadosStore } from '../../stores/empleados'
+import { useEmpleadosStore } from '../../stores/empleados';
 import DeleteEmployeeModal from '../forms/DeleteEmployeeModal.vue';
 
 const [showEditModal, toggleEditModal] = useToggle()

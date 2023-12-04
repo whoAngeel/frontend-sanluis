@@ -5,6 +5,7 @@ import { useToast } from 'vue-toastification'
 
 const toast = useToast()
 
+
 export const useCategoriesStore = defineStore('categories', {
     state: () => ({
         categories: [],
@@ -76,7 +77,37 @@ export const useCategoriesStore = defineStore('categories', {
                 toast.error("Error al cargar las categorias")
                 console.log(error);
             }
-        }
+        },
+
+        async editarCategoria(id, values, token) {
+            try {
+                const response = await axios.patch(`/api/categories/${id}`, values, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                })
+                toast.success("Categoria actualizada correctamente");
+            } catch (error) {
+                toast.error("Error al actualizar las categorias" )
+                console.log(error);
+            }
+        },
+/*
+        async getCategori(id,token) {
+            try {
+                const response = await axios.get(`/api/categories/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                }).then(res =>{
+                    return res.data
+                })
+            } catch (error) {
+                console.log(error);
+                toast.error("Error al obtener la categoria"+error)
+                return
+            }
+        }*/
 
     }
 })

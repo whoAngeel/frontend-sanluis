@@ -18,11 +18,12 @@ export const useProveedoresStore = defineStore('proveedores', () => {
         }).then(res => {
             proveedores.value = res.data
         }).then(err => {
+            toast.error("Error al cargar los proveedores")
             console.log(err);
         })
     }
 
-    return {
+    return {//regresr todos los metodos
         proveedores,
         fetchProveedores
     }
