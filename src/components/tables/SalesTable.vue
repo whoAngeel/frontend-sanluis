@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto h-44">
         <table class="table">
             <!-- head -->
             <thead>
@@ -18,7 +18,9 @@
                     <td>{{ venta.employee.fullname }}</td>
                     <td>{{ venta.items.length }}</td>
                     <td>${{ venta.total.toFixed(2) }} </td>
-                    <td>{{ venta.createdAt }} </td>
+                    <td>
+                        <timeago :datetime="venta.createdAt" :locale="es" />
+                    </td>
                 </tr>
 
             </tbody>
@@ -29,10 +31,12 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useVentaStore } from '../../stores/venta'
-const { ventas } = useVentaStore()
+import { es } from 'date-fns/locale'
+const { ventas, fetchVentas } = useVentaStore()
 
-
-onMounted(() => {
-
+onMounted(async () => {
+    await fetchVentas()
 })
+
+
 </script>

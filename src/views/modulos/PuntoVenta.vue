@@ -25,7 +25,7 @@
 
                     <ul v-if="productos.length > 0" class="mt-2 w-full">
                         <li v-for="item in productos" :key="item.id" class="py-2 pl-2  ">
-                            <button @click="agregarCarrito(item)"
+                            <button :disabled="item.stock == 1" @click="agregarCarrito(item)"
                                 class="btn btn-outline  w-full flex justify-between  cursor-pointer">
                                 <span class=" truncate ">
                                     {{ item.name }}
@@ -97,7 +97,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onBeforeMount, onUnmounted, ref, watch } from 'vue';
 import NavBar from '../../components/navbars/NavBar.vue';
 import SalesTable from '../../components/tables/SalesTable.vue'
 import { useForm } from 'vee-validate';
@@ -163,15 +163,18 @@ const confirmarVenta = async () => {
             }))
         }
 
-        console.log("realizando venta");
+        toast.success("realizando venta");
         realizandoVenta.value = false
+        await ventaStore.fetchVentas()
+        ventaStore.limpiarVenta()
+        ventaStore.limpiarBusqueda()
     } catch (error) {
         realizandoVenta.value = false
         console.log(error);
         toast.error("Error al realizar la venta")
     } finally {
         ventaStore.vaciarCarrito()
-        ventaStore.fetchVentas()
+        await ventaStore.fetchVentas()
         ventaStore.limpiarVenta()
     }
 }
@@ -188,16 +191,17 @@ const total = computed(() => {
 const agregarCarrito = (product) => {
     let selectedQuantity = 1
     let existingProduct = carrito.find(p => p.id === product.id)
-    if (existingProduct) {
-        if (existingProduct.amount + selectedQuantity <= existingProduct.stock) {//TODO cambiar a que haya un producto en almacen
-            existingProduct.amount += selectedQuantity
-            existingProduct.selectedQuantity = selectedQuantity;
-        } else {
-            toast.warning("Stock insuficiente")
-        }
+    if (existingProduct && existingProduct.amount + selectedQuantity > existingProduct.stock) {
+
+        toast.warning("Stock insuficiente")
+    } else if (!existingProduct && selectedQuantity > product.stock) {
         // existingProduct.amount += selectedQuantity
+        toast.warning("Stock insuficiente")
     } else {
-        if (selectedQuantity <= product.stock) {
+        if (existingProduct) {
+            existingProduct.amount += selectedQuantity
+        }
+        else {
             carrito.push({
                 name: product.name,
                 id: product.id,
@@ -205,9 +209,9 @@ const agregarCarrito = (product) => {
                 stock: product.stock,
                 salePrice: product.salePrice
             })
-        } else {
-            toast.warning("Stock insuficiente")
         }
+
+
 
     }
 
@@ -237,8 +241,8 @@ const limpiarBusqueda = () => {
     productos.value = []
 }
 
-onMounted(async () => {
-    await ventaStore.fetchVentas()
+onBeforeMount(() => {
+    ventaStore.fetchVentas()
 })
 
 onUnmounted(() => {
