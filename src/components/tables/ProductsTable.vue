@@ -34,8 +34,8 @@
             <EditProduct :producto="producto" @closeModal="toggleEditModal()" />
         </template>
     </Modal>
-    <div class="overflow-x-auto">
-        <table class="table table-xs">
+    <div class="overflow-x-auto flex justify-center mt-5">
+        <table class="table w-3/4">
             <thead>
                 <tr>
                     <th>ID</th>

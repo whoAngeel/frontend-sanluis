@@ -19,8 +19,10 @@
             <CreateProductForm @closeModal="toggleCreateModal()" />
         </template>
     </Modal>
-    <label @click="toggleCreateModal()" class="btn btn-primary">Crear producto</label>
-    <div class="flex justify-center content-center h-screen">
+    <div class="flex justify-center w-3/4 mx-auto mt-4">
+        <label @click="toggleCreateModal()" class="btn btn-primary flex items-center">Crear producto</label>
+    </div>
+    <div>
         <ProductsTable :products="store.productos" />
     </div>
 </template>

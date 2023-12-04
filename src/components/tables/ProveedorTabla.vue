@@ -41,7 +41,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Email|</th>
+                    <th>Email</th>
                     <th>Telefono</th>
                     <th>Acciones</th>
                 </tr>
@@ -50,8 +50,8 @@
                 <tr v-for="proveedor in proveedors" :key="proveedor.id" class="font-semibold">
                     <td>{{ proveedor.id }}</td>
                     <td>{{ proveedor.name }}</td>
-                    <td>${{ proveedor.email }}</td>
-                    <td>${{ proveedor.phone }}</td>
+                    <td>{{ proveedor.email }}</td>
+                    <td>{{ proveedor.phone }}</td>
                     <td>
                         <button class="btn btn-xs bg-rose-500 text-white" @click="seleccionarEliminar(proveedor.id)">
                             Eliminar

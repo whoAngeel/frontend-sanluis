@@ -1,6 +1,6 @@
 <template>
     <NavBar titleModule="Perfil de usuario" />
-    <div class="p-10 mx-auto items-center">
+    <div class="p-10 mx-auto items-center w-3/4">
 
 
         <form class="mt-2 ">
