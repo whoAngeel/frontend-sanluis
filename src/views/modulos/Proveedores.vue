@@ -1,6 +1,5 @@
 <template>
     <NavBar titleModule="Proveedores" />
-
     <Modal :show="showCreateModal" @close="toggleCreateModal()" size="md">
         <template #title>
             <h3 class="text-xl font-bold text-center ">
