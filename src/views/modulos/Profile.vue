@@ -81,7 +81,7 @@
 
 
         <div class="flex flex-row items-center justify-center h-full  my-8">
-            <label v-if="false" @click="onSubmit()" class="btn btn-primary mr-2">{{ opcion }}</label>
+            <label v-if="true" @click="onSubmit()" class="btn btn-primary mr-2">{{ opcion }}</label>
             <label v-if="opcion.includes('Guardar')" @click="cancel()" class="btn btn-primary">{{ opcion }}</label>
         </div>
     </div>

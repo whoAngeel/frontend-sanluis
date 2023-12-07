@@ -126,7 +126,7 @@ watch(productName, async (newNameProduct) => {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
-                method: "GET",
+                method: "POST",
                 url: "/api/products/search",
                 data: {
                     name: newNameProduct,
