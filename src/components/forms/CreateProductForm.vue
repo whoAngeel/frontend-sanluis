@@ -94,7 +94,7 @@
                 </label>
                 <select class="select select-md select-bordered w-full" v-model="providerId">
                     <option disabled selected value="">Selecciona un proveedor</option>
-                    <option v-for="item in proveedores" :key="item.id" :value="item.id">{{ item.name }}</option>
+                    <option v-for="item in proveedores" :key="item.id" :value="item.id">{{ item.companyName }}</option>
 
                 </select>
             </div>
