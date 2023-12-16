@@ -124,7 +124,7 @@ const emits = defineEmits(['closeModal'])
 const categoryId = ref(0)
 const providerId = ref(0)
 
-const { categorias } = storeCat
+const { categorias } = storeCat.categorias
 const { proveedores } = storeProv
 
 const { errors, defineInputBinds, isSubmitting, handleSubmit } = useForm({

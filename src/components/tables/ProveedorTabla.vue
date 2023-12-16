@@ -35,24 +35,43 @@
         </template>
     </Modal>
 
-    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
-        <div class="card  w-72 h-52 bg-base-200 shadow-xl" v-for="provider in providers" :key="provider.id">
-            <div class="card-body">
-                <h2 class="card-title">
-                    {{ provider.name }}
-                </h2>
-                <p>
-                    {{ provider.email }}
-                </p>
-                <p>
-                    {{ provider.phone }}
-                </p>
-                <div class="card-actions justify-end">
-                    <button class="btn btn-info btn-sm" @click="seleccionarEdit(provider.id)">Editar</button>
-                    <button class="btn btn-error btn-sm" @click="seleccionarEliminar(provider.id)">Eliminar</button>
-                </div>
-            </div>
-        </div>
+    <div class="overflow-x-auto">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="proveedor in proveedors" :key="proveedor.id" class="font-semibold">
+                    <td>{{ proveedor.id }}</td>
+                    <td>{{ proveedor.name }}</td>
+                    <td>{{ proveedor.email }}</td>
+                    <td>{{ proveedor.phone }}</td>
+                    <td>
+                        <button class="btn btn-xs bg-rose-500 text-white" @click="seleccionarEliminar(proveedor.id)">
+                            Eliminar
+                        </button>
+                        <button @click="seleccionarEdit(proveedor.id)" class="btn btn-xs bg-sky-500 text-white">
+                            Editar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email|</th>
+                    <th>Telefono</th>
+                    <th>Acciones</th>
+                </tr>
+            </tfoot>
+        </table>
     </div>
 </template>
 
@@ -64,13 +83,12 @@ import { ref } from 'vue';
 import { useProveedoresStore } from '../../stores/proveedores';
 import DeleteProveedor from '../forms/DeleteProveedor.vue';
 
-const store = useProveedoresStore()
-
 const [showEditModal, toggleEditModal] = useToggle()
 const [showDeleteModal, toggleDeleteModal] = useToggle()
-
-const { providers } = defineProps(['providers'])
 const proveedor = ref({})
+const store = useProveedoresStore()
+
+const props = defineProps(['proveedors'])
 
 const seleccionarEdit = async (id) => {
     proveedor.value = await store.getProveedor(id)

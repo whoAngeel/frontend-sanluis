@@ -125,7 +125,7 @@ const props = defineProps(['producto'])
 const categoryId = ref(props.producto.categoryId)
 const providerId = ref(props.producto.providerId)
 
-const { categorias } = storeCat
+const { categorias } = storeCat.categorias
 const { proveedores } = storeProv
 
 const { errors, defineInputBinds, isSubmitting, handleSubmit } = useForm({

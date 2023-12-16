@@ -6,7 +6,7 @@
             <div class="flex flex-col w-full bg-base-100 rounded-r-3xl overflow-hidden">
                 <div class="flex items-center justify-center shadow-md py-4">
                     <!-- <h1 class="text-3xl uppercase text-primary">Logo</h1> -->
-                    <img class="h-36 logo" src="../../public/logo.png" alt="Logo.png">
+                    <img class="h-36" src="../../public/logo2.png" alt="Logo.png">
                 </div>
                 <ul class="flex flex-col py-4 text-xl ">
                     <li>

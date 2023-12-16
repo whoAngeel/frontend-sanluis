@@ -17,7 +17,7 @@ export const useEmpleadosStore = defineStore('empleados', () => {
                 Authorization: `Bearer ${token}`
             },
             method: "GET",
-            url: `/api/employees`,
+            url: `/api/employees`
 
         }).then(res => {
             const employeesWithoutAdminUser = res.data.filter(employee => {

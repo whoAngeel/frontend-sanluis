@@ -15,7 +15,7 @@
                                 Nombre de usuario:
                             </label>
                             <input v-model="username" type="text" class="input input-sm block w-full "
-                                placeholder="usuario1" required="">
+                                placeholder="usuario" required="">
                         </div>
 
                         <div class="py-2" x-data="{ show: true }">
